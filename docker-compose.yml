@@ -1,0 +1,43 @@
+version: '3.3'
+services: 
+    banco:
+        image: mysql:5.6
+        hostname: banco
+        environment: 
+            - MYSQL_ROOT_PASSWORD=SafiraLabApp
+            - MYSQL_DATABASE=safira
+        ports: 
+            - "3306:3306"
+        volumes: 
+            - ./data:/var/lib/mysql
+        networks: 
+            - safira
+    safira_api:
+        build: ./safira_api
+        hostname: safira_api
+        environment: 
+            WAIT_HOSTS: localhost:3306
+        ports: 
+            - "8080:8080"
+        depends_on:
+            - banco
+        links: 
+            - banco
+        networks: 
+            - safira
+    safira_lab:
+        build: ./frontend
+        hostname: safira_lab
+        ports: 
+            - "5000:5000"
+        depends_on: 
+            - safira_api
+        links: 
+            - safira_api
+        environment: 
+            WAIT_HOSTS: localhost:8080
+        networks: 
+            - safira
+networks: 
+    safira:
+        driver: bridge
