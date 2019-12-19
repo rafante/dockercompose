@@ -1,0 +1,13 @@
+.filtro_campo{
+    display: flex;
+    align-items: center;
+}
+.filtro_campo_nome{
+    flex: .15;
+}
+.filtro_campo_operacoes{
+    flex: .1;
+}
+.filtro_campo_input{
+    flex: .55;
+}

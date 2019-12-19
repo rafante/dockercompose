@@ -4,6 +4,10 @@ WORKDIR /safiralab
 
 COPY ./safira_lab /safiralab
 
-CMD [ "npx", "serve" ]
-
-EXPOSE 5000
+# CMD [ "npm", "i", "-g", "yarn" ]
+# CMD [ "yarn" ]
+# CMD [ "yarn", "start" ]
+RUN npm i -g yarn && \
+    yarn && \
+    yarn start
+EXPOSE 3000

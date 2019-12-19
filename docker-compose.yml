@@ -11,33 +11,28 @@ services:
         volumes: 
             - ./data:/var/lib/mysql
         networks: 
-            - safira
-    safira_api:
-        build: ./safira_api
-        hostname: safira_api
+            - backend
+    safira-api:
+        build: ./teste_tomcat
         environment: 
             WAIT_HOSTS: localhost:3306
         ports: 
             - "8080:8080"
         depends_on:
             - banco
-        links: 
-            - banco
         networks: 
-            - safira
-    safira_lab:
+            - frontend
+            - backend
+    safira-lab:
         build: ./frontend
-        hostname: safira_lab
         ports: 
             - "5000:5000"
         depends_on: 
-            - safira_api
-        links: 
-            - safira_api
-        environment: 
-            WAIT_HOSTS: localhost:8080
-        networks: 
-            - safira
+            - safira-api
+        networks:
+            - frontend
 networks: 
-    safira:
+    frontend:
+        driver: bridge
+    backend:
         driver: bridge
